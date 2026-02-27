@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2026 日本高球商務考察行程</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Noto Sans TC', sans-serif; scroll-behavior: smooth; }
+        .day-active { color: #2563eb; font-weight: 700; border-left: 4px solid #2563eb; }
+        .timeline-line { position: absolute; left: 20px; top: 0; bottom: 0; width: 2px; background: #e5e7eb; z-index: -1; }
+        ::-webkit-scrollbar { width: 0px; }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <div id="app" class="flex min-h-screen">
+        <nav class="fixed left-0 top-0 h-full w-20 bg-white border-r border-gray-100 flex flex-col items-center py-8 z-50">
+            <div class="mb-8 text-blue-600 font-bold text-xl italic">Golf</div>
+            <div class="space-y-6" id="dayNav">
+                </div>
+        </nav>
+
+        <main class="ml-20 flex-1 px-4 py-8 pb-20">
+            <header class="mb-8">
+                <h1 class="text-2xl font-bold text-gray-900">2026 日本高球考察</h1>
+                <p class="text-sm text-gray-500 mt-1">7人商務團 | 東京 · 橫濱</p>
+            </header>
+
+            <div id="itineraryContent" class="space-y-12">
+                </div>
+        </main>
+    </div>
+
+    <script>
+        // 行程資料變數 (結構化資料)
+        const itineraryData = [
+            {
+                day: 1, date: "03/05", weekday: "Thu", theme: "抵達與商務晚宴",
+                items: [
+                    { time: "14:00", event: "航班抵達", location: "成田機場 (NRT) CX504", icon: "fa-plane-arrival" },
+                    { time: "15:30", event: "前往酒店", location: "東京日航豐洲酒店", transport: "利木津巴士", notes: "自行前往酒店，步行2分鐘至飯店", googleMap: "Hotel JAL City Tokyo Toyosu" },
+                    { time: "16:00", event: "辦理入住", location: "飯店大廳", icon: "fa-key" },
+                    { time: "18:30", event: "客戶晚餐", location: "待定地點", transport: "預約接送", notes: "與客戶晚餐 (已預約)", status: "booked", googleMap: "Tokyo Station Area" }
+                ]
+            },
+            {
+                day: 2, date: "03/06", weekday: "Fri", theme: "客戶拜訪與專業考察",
+                items: [
+                    { time: "09:30", event: "拜訪 TaylorMade", location: "TM 日本辦公室 (青海)", icon: "fa-briefcase", notes: "準備名片與簡報資料", googleMap: "TaylorMade Golf Japan HQ" },
+                    { time: "13:30", event: "Japan Golf Fair 2026", location: "Pacifico Yokohama", icon: "fa-golf-ball-tee", notes: "第60屆國際高爾夫展 (橫濱)", googleMap: "Pacifico Yokohama" },
+                    { time: "17:00", event: "出發品川", location: "橫濱 → 品川", icon: "fa-car", notes: "交通警告：週五傍晚尖峰" },
+                    { time: "18:30", event: "晚餐：天婦羅", location: "高輪格蘭王子大飯店", notes: "Tempura Wakatake (已預約)", status: "booked", googleMap: "Grand Prince Hotel Takanawa" }
+                ]
+            },
+            {
+                day: 3, date: "03/07", weekday: "Sat", theme: "市場通路實地調研",
+                items: [
+                    { time: "09:30", event: "皇居散策", location: "皇居東御苑", icon: "fa-camera", googleMap: "The East Gardens of the Imperial Palace" },
+                    { time: "11:30", event: "通路考察 (I)", location: "Tsuruya Golf 八重洲店", icon: "fa-shop", notes: "考察老牌通路陳列", googleMap: "Tsuruya Golf Yaesu" },
+                    { 
+                        time: "14:00", event: "通路考察 (II)", isOption: true,
+                        options: [
+                            { name: "Option A: Golf 5 Prestige", address: "東京都中央區日本橋室町 4-1-21", googleMap: "Golf 5 Prestige Nihonbashi" },
+                            { name: "Option B: Double Eagle", address: "東京都中央區銀座 3-4-12", googleMap: "Double Eagle Ginza" }
+                        ]
+                    },
+                    { time: "16:00", event: "TM 旗艦店", location: "TaylorMade 銀座店", icon: "fa-star", notes: "核心拜訪：精品化營運調研", googleMap: "TaylorMade Ginza Store" },
+                    { time: "18:30", event: "晚餐：懷石料理", location: "Palace Hotel 和田倉", icon: "fa-utensils", notes: "Wadakura (已預約)", status: "booked", googleMap: "Palace Hotel Tokyo Wadakura" }
+                ]
+            },
+            {
+                day: 4, date: "03/08", weekday: "Sun", theme: "豐洲巡禮與返程",
+                items: [
+                    { time: "08:45", event: "辦理退房", location: "日航豐洲酒店", icon: "fa-sign-out-alt" },
+                    { time: "10:00", event: "前往機場", location: "豐洲 → 成田機場", icon: "fa-bus-alt", transport: "包車(建議)", notes: "10:00 準時出發" },
+                    { time: "14:20", event: "返程航班", location: "成田機場 (NRT) CX527", icon: "fa-plane-departure" }
+                ]
+            }
+        ];
+
+        // 渲染導航
+        const navEl = document.getElementById('dayNav');
+        itineraryData.forEach(data => {
+            const btn = document.createElement('div');
+            btn.className = `flex flex-col items-center cursor-pointer py-2 w-full transition ${data.day === 1 ? 'day-active' : 'text-gray-400'}`;
+            btn.innerHTML = `<span class="text-xs uppercase">${data.weekday}</span><span class="text-lg font-bold">${data.date.split('/')[1]}</span>`;
+            btn.onclick = () => {
+                document.getElementById(`day-${data.day}`).scrollIntoView({ behavior: 'smooth' });
+                document.querySelectorAll('#dayNav > div').forEach(el => el.classList.remove('day-active', 'text-gray-400'));
+                document.querySelectorAll('#dayNav > div').forEach((el, idx) => {
+                    if (idx + 1 === data.day) el.classList.add('day-active');
+                    else el.classList.add('text-gray-400');
+                });
+            };
+            navEl.appendChild(btn);
+        });
+
+        // 渲染內容
+        const contentEl = document.getElementById('itineraryContent');
+        itineraryData.forEach(day => {
+            const daySection = document.createElement('section');
+            daySection.id = `day-${day.day}`;
+            daySection.className = "relative";
+            
+            let itemsHtml = day.items.map(item => {
+                const mapLink = item.googleMap ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(item.googleMap)}` : '#';
+                
+                if (item.isOption) {
+                    return `
+                        <div class="mb-8 relative pl-8">
+                            <div class="absolute left-0 top-1.5 w-4 h-4 rounded-full bg-blue-500 border-4 border-white shadow-sm z-10"></div>
+                            <div class="text-blue-600 font-bold text-sm mb-1">${item.time}</div>
+                            <div class="bg-blue-50 border border-blue-100 rounded-2xl p-4 shadow-sm">
+                                <h3 class="font-bold mb-3"><i class="fa-solid fa-map-location-dot mr-2"></i>考察選項 (二選一)</h3>
+                                <div class="grid grid-cols-1 gap-2">
+                                    ${item.options.map((opt, i) => `
+                                        <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(opt.googleMap)}" class="block bg-white border border-blue-200 p-3 rounded-xl text-sm hover:bg-blue-100 transition">
+                                            <div class="font-bold text-blue-700">${opt.name}</div>
+                                            <div class="text-gray-500 text-xs mt-1">${opt.address}</div>
+                                        </a>
+                                    `).join('')}
+                                </div>
+                            </div>
+                        </div>`;
+                }
+
+                return `
+                    <div class="mb-8 relative pl-8">
+                        <div class="absolute left-0 top-1.5 w-4 h-4 rounded-full ${day.day === 1 ? 'bg-blue-500' : 'bg-blue-400'} border-4 border-white shadow-sm z-10"></div>
+                        <div class="flex items-center justify-between mb-1">
+                            <div class="text-blue-600 font-bold text-sm">${item.time}</div>
+                            ${item.status === 'booked' || (item.notes && item.notes.includes('預約')) ? '<span class="bg-green-100 text-green-700 text-[10px] px-2 py-0.5 rounded-full font-bold uppercase tracking-wider shadow-sm border border-green-200"><i class="fa-solid fa-check-circle mr-1"></i>預約確認</span>' : ''}
+                        </div>
+                        <div class="bg-white rounded-2xl p-4 shadow-sm border border-gray-100">
+                            <h3 class="font-bold text-gray-800 flex items-center">
+                                <i class="fa-solid ${item.icon || 'fa-circle-dot'} text-gray-400 mr-2 text-sm"></i>
+                                ${item.event}
+                            </h3>
+                            <a href="${mapLink}" class="text-sm text-gray-500 mt-2 block active:text-blue-500">
+                                <i class="fa-solid fa-location-dot mr-1"></i> ${item.location}
+                            </a>
+                            ${item.notes ? `<p class="text-xs text-gray-400 mt-2 italic bg-gray-50 p-2 rounded-lg border-l-2 border-gray-200">${item.notes}</p>` : ''}
+                        </div>
+                    </div>`;
+            }).join('');
+
+            daySection.innerHTML = `
+                <div class="sticky top-0 bg-gray-50/90 backdrop-blur-sm py-2 mb-4 z-20">
+                    <h2 class="text-lg font-black text-gray-900">DAY ${day.day} <span class="text-blue-600 ml-2">${day.date}</span></h2>
+                    <p class="text-xs text-gray-500">${day.theme}</p>
+                </div>
+                <div class="timeline-line"></div>
+                ${itemsHtml}
+            `;
+            contentEl.appendChild(daySection);
+        });
+
+        // 簡單的捲動追蹤
+        window.onscroll = () => {
+            const sections = document.querySelectorAll('section');
+            const navItems = document.querySelectorAll('#dayNav > div');
+            let current = "";
+
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (pageYOffset >= sectionTop - 100) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navItems.forEach((btn, idx) => {
+                btn.classList.remove('day-active', 'text-gray-400');
+                if (`day-${idx + 1}` === current) {
+                    btn.classList.add('day-active');
+                } else {
+                    btn.classList.add('text-gray-400');
+                }
+            });
+        };
+    </script>
+</body>
+</html>
