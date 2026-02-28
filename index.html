@@ -3,226 +3,253 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>2026 Golf Tour - Flagship Edition</title>
+    <title>60th Japan Golf Fair 2026 - 高爾夫產業考察</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Noto Sans TC', sans-serif; scroll-behavior: smooth; }
-        .bg-hero { 
-            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1542051841857-5f90071e7989?auto=format&fit=crop&q=80&w=1200');
-            background-size: cover; background-position: center;
-        }
-        .day-active { color: #2563eb; font-weight: 700; border-right: 4px solid #2563eb; }
-        .timeline-line { position: absolute; left: 20px; top: 0; bottom: 0; width: 2px; background: #e5e7eb; z-index: -1; }
-        .glass-card { background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(10px); }
-        ::-webkit-scrollbar { width: 4px; }
-        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+        .dynamic-bg { transition: background-image 0.8s ease-in-out; background-size: cover; background-position: center; background-attachment: fixed; }
+        .glass-panel { background: rgba(255, 255, 255, 0.88); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.4); }
+        .timeline-dot { position: absolute; left: -33px; top: 5px; width: 14px; height: 14px; border-radius: 50%; border: 3px solid white; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        .weatherwidget-io { border-radius: 15px; overflow: hidden; }
     </style>
 </head>
-<body class="bg-slate-50 text-slate-800">
+<body class="bg-slate-100">
 
-    <div id="app" class="flex flex-col md:flex-row min-h-screen">
+    <div class="flex flex-col lg:flex-row min-h-screen relative">
         
-        <aside class="w-full md:w-72 bg-white border-r border-slate-200 p-6 flex flex-col gap-8 h-screen sticky top-0 overflow-y-auto z-50">
-            <div class="flex items-center gap-2 text-blue-600 font-black text-xl">
-                <i class="fa-solid fa-golf-ball-tee"></i> GOLF TOUR 2026
+        <aside class="lg:w-80 w-full glass-panel border-r border-slate-200 p-6 flex flex-col gap-6 lg:h-screen lg:sticky lg:top-0 z-40 overflow-y-auto">
+            <div class="space-y-1">
+                <h1 class="text-blue-700 font-black text-xl leading-tight tracking-tighter uppercase">60th Japan Golf Fair</h1>
+                <p class="text-[10px] text-slate-500 font-bold uppercase tracking-widest">高爾夫產業考察 · 橫濱/東京</p>
             </div>
 
-            <section>
-                <h3 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-3">行前備忘錄</h3>
-                <div class="space-y-3">
-                    <a href="https://www.vjw.digital.go.jp/" target="_blank" class="flex items-center p-3 rounded-xl bg-blue-50 border border-blue-100 hover:bg-blue-100 transition group">
-                        <i class="fa-solid fa-passport text-blue-500 mr-3"></i>
-                        <div class="text-xs">
-                            <p class="font-bold text-blue-700">Visit Japan Web</p>
-                            <p class="text-blue-500/70 italic">入關申報手續</p>
+            <section class="mt-2">
+                <h3 class="text-[10px] font-black text-slate-400 uppercase tracking-widest flex items-center gap-2 mb-2">
+                    <i class="fa-solid fa-cloud-sun"></i> 即時氣象預報
+                </h3>
+                <a class="weatherwidget-io" href="https://forecast7.com/zh-tw/35d69139d69/tokyo/" data-label_1="TOKYO / YOKOHAMA" data-label_2="日本考察即時天氣" data-font="Noto Sans TC" data-icons="Climacons Animated" data-days="5" data-theme="pure" >TOKYO WEATHER</a>
+                <script>
+                !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src='https://weatherwidget.io/js/widget.min.js';fjs.parentNode.insertBefore(js,fjs);}}(document,'script','weatherwidget-io-js');
+                </script>
+                <a href="https://www.japan.travel/tw/weather/" target="_blank" class="mt-2 block text-center text-[10px] font-bold text-blue-500 hover:underline italic">
+                    <i class="fa-solid fa-external-link-alt mr-1"></i> 查看觀光局詳細預報
+                </a>
+            </section>
+
+            <nav class="space-y-1" id="dayNav"></nav>
+
+            <div class="space-y-4 pt-4 border-t border-slate-200">
+                <h3 class="text-[10px] font-black text-slate-400 uppercase tracking-widest flex items-center gap-2">
+                    <i class="fa-solid fa-passport"></i> 行前備忘錄
+                </h3>
+                <div class="space-y-2">
+                    <a href="https://www.vjw.digital.go.jp/" target="_blank" class="block p-3 rounded-xl bg-blue-600 text-white shadow-lg shadow-blue-100 hover:scale-[1.02] transition transform">
+                        <div class="flex items-center gap-3">
+                            <i class="fa-solid fa-plane-arrival"></i>
+                            <div class="text-[10px]">
+                                <p class="font-bold">Visit Japan Web</p>
+                                <p class="opacity-70">入關電子申報連結</p>
+                            </div>
                         </div>
                     </a>
-                    <a href="https://www.japangolffair.com/" target="_blank" class="flex items-center p-3 rounded-xl bg-orange-50 border border-orange-100 hover:bg-orange-100 transition">
-                        <i class="fa-solid fa-ticket text-orange-500 mr-3"></i>
-                        <div class="text-xs text-orange-800 font-bold">預約 JGF 門票 (¥1000)</div>
-                    </a>
-                    <div id="todoList" class="space-y-2">
+                    <a href="https://www.japangolffair.com/" target="_blank" class="block p-3 rounded-xl bg-emerald-600 text-white shadow-lg shadow-emerald-100 hover:scale-[1.02] transition transform">
+                        <div class="flex items-center gap-3">
+                            <i class="fa-solid fa-ticket"></i>
+                            <div class="text-[10px]">
+                                <p class="font-bold">JGF 門票預約</p>
+                                <p class="opacity-70">提前購票優惠 ¥1,000</p>
+                            </div>
                         </div>
-                    <button onclick="addTodo()" class="w-full py-2 border-2 border-dashed border-slate-200 rounded-xl text-xs text-slate-400 hover:border-blue-400 hover:text-blue-400 transition">
-                        + 添加備註項目
-                    </button>
+                    </a>
+                </div>
+                <div id="customNotes" class="space-y-2"></div>
+                <button onclick="addNote()" class="w-full py-2 text-[10px] font-bold text-slate-400 border border-dashed border-slate-300 rounded-lg hover:border-blue-400 hover:text-blue-400 transition">+ 自定義備忘項目</button>
+            </div>
+        </aside>
+
+        <main class="flex-1 relative">
+            <div id="itinerary">
+                </div>
+        </main>
+
+        <aside class="lg:w-80 w-full glass-panel border-l border-slate-200 p-6 flex flex-col gap-6 lg:h-screen lg:sticky lg:top-0 z-40 overflow-y-auto">
+            <section class="space-y-4">
+                <h3 class="text-[10px] font-black text-slate-400 uppercase tracking-widest flex items-center gap-2">
+                    <i class="fa-solid fa-coins"></i> 匯率計算 (預設 0.21)
+                </h3>
+                <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100 space-y-3">
+                    <div class="flex items-center gap-2 bg-slate-50 p-2 rounded-lg">
+                        <span class="text-xs font-black text-slate-400">JPY</span>
+                        <input type="number" id="calcInput" oninput="quickConvert()" placeholder="日幣金額" class="w-full bg-transparent border-none text-right font-black text-slate-700 focus:ring-0">
+                    </div>
+                    <div class="flex justify-between items-center px-1">
+                        <span class="text-[10px] font-bold text-slate-400">TWD</span>
+                        <span id="calcResult" class="text-lg font-black text-blue-600">NT$ 0</span>
+                    </div>
                 </div>
             </section>
 
-            <nav class="flex flex-col gap-2" id="dayNav"></nav>
-
-            <section class="mt-auto pt-6 border-t border-slate-100">
-                <h3 class="text-xs font-bold text-slate-400 uppercase mb-3">匯率快速記帳 (JPY ➔ TWD)</h3>
-                <div class="bg-slate-50 p-4 rounded-2xl space-y-3">
-                    <div class="relative">
-                        <span class="absolute left-3 top-2 text-xs text-slate-400">¥</span>
-                        <input type="number" id="jpyInput" oninput="convertCurrency()" placeholder="日幣金額" class="w-full bg-white border border-slate-200 rounded-lg pl-8 pr-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <section class="space-y-4 flex-1">
+                <h3 class="text-[10px] font-black text-slate-400 uppercase tracking-widest flex items-center gap-2">
+                    <i class="fa-solid fa-shopping-bag"></i> 購物明細清單
+                </h3>
+                <div class="space-y-2" id="cartList"></div>
+                <div class="pt-4 border-t border-slate-200">
+                    <div class="flex justify-between text-xs font-black text-slate-700 mb-4 px-1">
+                        <span>總計 (TWD)</span>
+                        <span id="cartTotal">NT$ 0</span>
                     </div>
-                    <div class="text-center text-slate-400"><i class="fa-solid fa-arrow-down-long"></i></div>
-                    <div class="flex justify-between items-center px-2">
-                        <span class="text-xs font-bold text-slate-500">預估台幣</span>
-                        <span id="twdResult" class="text-lg font-black text-blue-600">NT$ 0</span>
+                    <div class="space-y-2 bg-slate-50 p-3 rounded-xl">
+                        <input type="text" id="itemName" placeholder="品項 (如: PING 桿頭)" class="w-full text-[10px] p-2 rounded border border-slate-200">
+                        <input type="number" id="itemPrice" placeholder="金額 (JPY)" class="w-full text-[10px] p-2 rounded border border-slate-200">
+                        <button onclick="addToCart()" class="w-full bg-blue-600 text-white text-[10px] font-bold py-2 rounded-lg hover:bg-blue-700 transition">加入清單</button>
                     </div>
                 </div>
             </section>
         </aside>
 
-        <main class="flex-1">
-            <header class="bg-hero h-80 flex flex-col justify-end p-8 md:p-12 text-white">
-                <div class="badge bg-blue-600/80 px-3 py-1 rounded-full text-[10px] font-bold tracking-widest uppercase w-fit mb-4">Official Itinerary</div>
-                <h1 class="text-4xl md:text-5xl font-black mb-2 tracking-tight">Tokyo Golf Business Tour</h1>
-                <p class="text-slate-200 font-light max-w-lg">2026 日本高爾夫產業考察 · 橫濱/東京 · 7人商務團</p>
-            </header>
-
-            <div id="itineraryContent" class="p-4 md:p-12 space-y-16">
-                </div>
-        </main>
     </div>
 
     <script>
+        const rate = 0.21;
         const itineraryData = [
             {
-                day: 1, date: "03/05", weekday: "Thu", weather: "13°C 多雲轉晴", weatherIcon: "fa-cloud-sun",
+                day: 1, date: "03/05", weekday: "Thu",
+                bg: "https://images.unsplash.com/photo-1542051841857-5f90071e7989?auto=format&fit=crop&w=1600&q=80", // Shibuya Sky
                 items: [
-                    { time: "14:00", event: "航班抵達 (CX504)", location: "成田機場 T2", icon: "fa-plane-arrival", info: "報到櫃檯：HKG T1-F | 到達出口：T2", official: "https://www.cathaypacific.com/", googleMap: "Narita Airport Terminal 2" },
-                    { time: "18:30", event: "客戶晚宴", location: "東京精選餐廳", notes: "已預約 VIP 廂房", status: "booked", icon: "fa-utensils" }
+                    { time: "14:00", title: "國泰 CX504 抵達", loc: "成田 T2", icon: "fa-plane-arrival", info: "報到櫃檯 F | 到達出口 T2", map: "Narita Airport T2", link: "https://www.cathaypacific.com" },
+                    { time: "19:00", title: "商務晚宴 (澀谷夜色)", loc: "Shibuya", icon: "fa-utensils", note: "首日行程重點：團隊建立與環境熟悉", map: "Shibuya Sky" }
                 ]
             },
             {
-                day: 2, date: "03/06", weekday: "Fri", weather: "13°C 晴時多雲", weatherIcon: "fa-sun",
+                day: 2, date: "03/06", weekday: "Fri",
+                bg: "https://images.unsplash.com/photo-1571474004502-c1def214ac6d?auto=format&fit=crop&w=1600&q=80", // Yokohama
                 items: [
-                    { time: "10:30", event: "第60屆 Japan Golf Fair 2026", location: "Pacifico Yokohama", icon: "fa-golf-ball-tee", notes: "亞洲最大高球產業展", official: "https://www.japangolffair.com/", googleMap: "Pacifico Yokohama" },
-                    { time: "18:30", event: "晚餐：天婦羅 若竹", location: "高輪格蘭王子大飯店", notes: "預約確認", status: "booked", icon: "fa-shrimp", official: "https://www.princehotels.cn/takanawa/spring-tempura-courses/" }
+                    { time: "10:30", title: "60th Japan Golf Fair 開幕", loc: "Pacifico Yokohama", icon: "fa-golf-ball-tee", note: "本日重點：產業趨勢觀察與廠商對接", link: "https://www.japangolffair.com/", map: "Pacifico Yokohama" },
+                    { time: "18:30", title: "晚餐：天婦羅 若竹", loc: "高輪王子飯店", icon: "fa-shrimp", menu: "https://www.princehotels.com/takanawa/zh-tw/", map: "Grand Prince Hotel Takanawa" }
                 ]
             },
             {
-                day: 3, date: "03/07", weekday: "Sat", weather: "16°C 局部降雨 (60%)", weatherIcon: "fa-cloud-showers-heavy",
+                day: 3, date: "03/07", weekday: "Sat",
+                bg: "https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&w=1600&q=80", // Imperial Palace
                 items: [
-                    { 
-                        time: "14:00", event: "通路考察 (旗艦店切換)", isOption: true,
-                        options: [
-                            { name: "Golf 5 Prestige 日本橋", official: "https://www.golf5-prestige.jp/en/store/nihonbashi/", googleMap: "Golf 5 Prestige Nihonbashi", icon: "fa-screwdriver-wrench", note: "重點：高級 Fitting 服務流程" },
-                            { name: "Double Eagle 銀座", official: "https://www.double-eagle-golf.com/", googleMap: "Double Eagle Ginza", icon: "fa-gem", note: "重點：時尚跨界品牌經營" }
-                        ]
-                    },
-                    { time: "18:30", event: "晚餐：懷石料理 和田倉", location: "皇宮酒店 (Palace Hotel)", notes: "預約確認", status: "booked", icon: "fa-leaf", official: "https://en.palacehoteltokyo.com/restaurant/wadakura/" }
+                    { time: "14:00", title: "旗艦通路考察", loc: "日本橋 / 銀座", icon: "fa-store", note: "考察 Golf 5 Prestige / Double Eagle 店裝與服務", map: "Golf 5 Prestige Nihonbashi" },
+                    { time: "19:00", title: "晚餐：懷石料理 和田倉", loc: "Palace Hotel", icon: "fa-leaf", menu: "https://en.palacehoteltokyo.com/restaurant/wadakura/", map: "Palace Hotel Tokyo" }
                 ]
             },
             {
-                day: 4, date: "03/08", weekday: "Sun", weather: "13°C 晴朗", weatherIcon: "fa-sun",
+                day: 4, date: "03/08", weekday: "Sun",
+                bg: "https://images.unsplash.com/photo-1513407030348-c983a97b98d8?auto=format&fit=crop&w=1600&q=80", // Tokyo Tower
                 items: [
-                    { time: "14:20", event: "返程航班 (CX527)", location: "成田機場 T2", icon: "fa-plane-departure", info: "報到櫃檯：T2 H/I 區", official: "https://www.cathaypacific.com/", googleMap: "Narita Airport Terminal 2" }
+                    { time: "11:00", title: "最後巡禮與整理", loc: "東京市區", icon: "fa-bag-shopping", note: "準備前往機場" },
+                    { time: "14:20", title: "國泰 CX527 返程", loc: "成田 T2", icon: "fa-plane-departure", info: "報到櫃檯 H/I 區", map: "Narita Airport T2", link: "https://www.cathaypacific.com" }
                 ]
             }
         ];
 
-        function renderApp() {
+        function renderItinerary() {
+            const container = document.getElementById('itinerary');
             const nav = document.getElementById('dayNav');
-            const content = document.getElementById('itineraryContent');
-            const exchangeRate = 0.21; // 預設 2026 匯率
+            
+            itineraryData.forEach(d => {
+                const btn = document.createElement('button');
+                btn.className = "w-full flex items-center justify-between p-3 rounded-xl hover:bg-white/60 transition text-slate-500 font-bold text-[11px]";
+                btn.innerHTML = `<span>DAY 0${d.day} <small class="ml-1 opacity-50 underline underline-offset-4">03/${d.date.split('/')[1]}</small></span>`;
+                btn.onclick = () => document.getElementById(`day-sec-${d.day}`).scrollIntoView({ behavior: 'smooth' });
+                nav.appendChild(btn);
 
-            itineraryData.forEach(day => {
-                // 生成導航
-                const navItem = document.createElement('div');
-                navItem.className = `cursor-pointer p-4 rounded-2xl flex items-center justify-between transition ${day.day === 1 ? 'day-active bg-blue-50' : 'text-slate-400'}`;
-                navItem.innerHTML = `<div><span class="text-[10px] block uppercase font-bold">${day.weekday}</span><span class="text-sm font-black">${day.date}</span></div><i class="fa-solid ${day.weatherIcon} text-xs opacity-60"></i>`;
-                navItem.onclick = () => document.getElementById(`day-${day.day}`).scrollIntoView({ behavior: 'smooth' });
-                nav.appendChild(navItem);
-
-                // 生成內容
-                const section = document.createElement('section');
-                section.id = `day-${day.day}`;
-                section.innerHTML = `
-                    <div class="flex items-center justify-between mb-8">
-                        <div>
-                            <h2 class="text-3xl font-black text-slate-900">DAY ${day.day} <span class="text-blue-600 ml-2">${day.date}</span></h2>
-                            <div class="flex items-center gap-2 mt-1 text-slate-400">
-                                <i class="fa-solid ${day.weatherIcon}"></i>
-                                <span class="text-xs font-bold uppercase tracking-widest">${day.weather}</span>
-                            </div>
+                const sec = document.createElement('section');
+                sec.id = `day-sec-${d.day}`;
+                sec.className = "min-h-screen dynamic-bg pt-20 pb-20 px-6 md:px-12";
+                sec.style.backgroundImage = `linear-gradient(to bottom, rgba(241,245,249,0.1), rgba(241,245,249,1)), url('${d.bg}')`;
+                
+                sec.innerHTML = `
+                    <div class="max-w-3xl mx-auto">
+                        <div class="mb-12">
+                            <span class="bg-blue-600 text-white px-3 py-1 rounded-full text-[10px] font-black tracking-widest uppercase">March 2026</span>
+                            <h2 class="text-6xl font-black text-slate-900 mt-4 tracking-tighter">${d.weekday} <span class="text-blue-600 font-light">03/${d.date.split('/')[1]}</span></h2>
                         </div>
-                    </div>
-                    <div class="relative pl-6 space-y-12">
-                        <div class="timeline-line"></div>
-                        ${day.items.map(item => renderItem(item)).join('')}
-                    </div>
-                `;
-                content.appendChild(section);
-            });
-        }
-
-        function renderItem(item) {
-            if (item.isOption) {
-                return `
-                    <div class="relative">
-                        <div class="absolute -left-8 top-1.5 w-4 h-4 rounded-full bg-blue-600 border-4 border-white shadow-sm"></div>
-                        <div class="text-xs font-bold text-blue-600 mb-2">${item.time}</div>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            ${item.options.map(opt => `
-                                <div class="bg-white border border-blue-100 p-4 rounded-2xl shadow-sm hover:shadow-md transition group">
-                                    <div class="flex justify-between items-start mb-3">
-                                        <div class="bg-blue-600 text-white p-2 rounded-lg"><i class="fa-solid ${opt.icon}"></i></div>
-                                        <div class="flex gap-2">
-                                            <a href="${opt.official}" target="_blank" class="text-slate-400 hover:text-blue-600 text-sm"><i class="fa-solid fa-globe"></i></a>
-                                            <a href="https://www.google.com/maps/search/${encodeURIComponent(opt.googleMap)}" target="_blank" class="text-slate-400 hover:text-red-500 text-sm"><i class="fa-solid fa-location-dot"></i></a>
+                        <div class="relative border-l-2 border-slate-300/30 pl-8 space-y-10">
+                            ${d.items.map(item => `
+                                <div class="relative group">
+                                    <div class="timeline-dot bg-white group-hover:bg-blue-600 transition duration-500"></div>
+                                    <span class="text-[10px] font-black text-blue-500/50 uppercase tracking-widest">${item.time}</span>
+                                    <div class="mt-2 p-6 glass-panel rounded-[2rem] shadow-2xl shadow-slate-200/50 hover:-translate-y-1 transition transform duration-500">
+                                        <div class="flex justify-between items-start">
+                                            <div class="flex gap-4 text-slate-800">
+                                                <div class="w-12 h-12 rounded-2xl bg-white flex items-center justify-center text-blue-600 shadow-inner"><i class="fa-solid ${item.icon} text-lg"></i></div>
+                                                <div>
+                                                    <h4 class="font-black text-lg tracking-tight">${item.title}</h4>
+                                                    <p class="text-[10px] font-bold text-slate-400 mt-1 uppercase tracking-widest"><i class="fa-solid fa-location-dot mr-1"></i> ${item.loc}</p>
+                                                </div>
+                                            </div>
+                                            <div class="flex gap-2">
+                                                ${item.link ? `<a href="${item.link}" target="_blank" class="w-8 h-8 rounded-full bg-white flex items-center justify-center text-slate-400 hover:text-blue-600 shadow-sm transition"><i class="fa-solid fa-globe text-[10px]"></i></a>` : ''}
+                                                <a href="http://googleusercontent.com/maps.google.com/6{encodeURIComponent(item.map)}" target="_blank" class="w-8 h-8 rounded-full bg-white flex items-center justify-center text-slate-400 hover:text-red-500 shadow-sm transition"><i class="fa-solid fa-map-pin text-[10px]"></i></a>
+                                            </div>
                                         </div>
+                                        ${item.info ? `<div class="mt-4 p-3 bg-blue-50/50 rounded-xl border border-blue-100 text-[10px] text-blue-700 font-bold">${item.info}</div>` : ''}
+                                        ${item.note ? `<p class="mt-4 text-[11px] text-slate-400 font-medium italic border-t border-slate-100 pt-4 leading-relaxed">${item.note}</p>` : ''}
                                     </div>
-                                    <h4 class="font-bold text-slate-800">${opt.name}</h4>
-                                    <p class="text-[10px] text-slate-400 mt-1">${opt.note}</p>
                                 </div>
                             `).join('')}
                         </div>
-                    </div>`;
-            }
-
-            return `
-                <div class="relative">
-                    <div class="absolute -left-8 top-1.5 w-4 h-4 rounded-full bg-slate-300 border-4 border-white shadow-sm"></div>
-                    <div class="flex items-center justify-between mb-2">
-                        <span class="text-xs font-bold text-slate-400">${item.time}</span>
-                        ${item.status === 'booked' ? '<span class="text-[10px] font-bold bg-green-100 text-green-600 px-2 py-0.5 rounded-full">預約確認</span>' : ''}
                     </div>
-                    <div class="bg-white p-5 rounded-3xl shadow-sm border border-slate-100">
-                        <div class="flex items-start justify-between">
-                            <div class="flex gap-4">
-                                <div class="w-10 h-10 rounded-xl bg-slate-50 flex items-center justify-center text-slate-400"><i class="fa-solid ${item.icon}"></i></div>
-                                <div>
-                                    <h3 class="font-bold text-slate-900">${item.event}</h3>
-                                    <p class="text-xs text-slate-400 mt-1"><i class="fa-solid fa-location-dot mr-1 text-[10px]"></i> ${item.location}</p>
-                                </div>
-                            </div>
-                            <div class="flex gap-2">
-                                ${item.official ? `<a href="${item.official}" target="_blank" class="w-8 h-8 rounded-full bg-slate-50 flex items-center justify-center text-slate-400 hover:bg-blue-50 hover:text-blue-500 transition"><i class="fa-solid fa-globe text-xs"></i></a>` : ''}
-                                <a href="https://www.google.com/maps/search/${encodeURIComponent(item.googleMap || item.location)}" target="_blank" class="w-8 h-8 rounded-full bg-slate-50 flex items-center justify-center text-slate-400 hover:bg-red-50 hover:text-red-500 transition"><i class="fa-solid fa-map text-xs"></i></a>
-                            </div>
+                `;
+                container.appendChild(sec);
+            });
+        }
+
+        let cart = [];
+        function addToCart() {
+            const name = document.getElementById('itemName').value;
+            const price = document.getElementById('itemPrice').value;
+            if(!name || !price) return;
+            cart.push({ name, price: parseFloat(price) });
+            renderCart();
+            document.getElementById('itemName').value = '';
+            document.getElementById('itemPrice').value = '';
+        }
+
+        function renderCart() {
+            const list = document.getElementById('cartList');
+            list.innerHTML = '';
+            let total = 0;
+            cart.forEach((item, idx) => {
+                total += item.price * rate;
+                list.innerHTML += `
+                    <div class="flex justify-between items-center p-3 bg-white/60 rounded-xl border border-white shadow-sm group">
+                        <div class="flex flex-col">
+                            <span class="text-[10px] font-black text-slate-700">${item.name}</span>
+                            <span class="text-[9px] text-slate-400 italic">¥${item.price.toLocaleString()}</span>
                         </div>
-                        ${item.info ? `<div class="mt-3 p-3 bg-slate-50 rounded-xl text-[10px] text-slate-500 font-medium"><i class="fa-solid fa-info-circle mr-1"></i> ${item.info}</div>` : ''}
-                        ${item.notes ? `<p class="mt-3 text-[11px] text-slate-400 italic">${item.notes}</p>` : ''}
-                    </div>
-                </div>`;
+                        <div class="flex items-center gap-2">
+                            <span class="text-[10px] font-bold text-blue-600">NT$ ${Math.round(item.price * rate).toLocaleString()}</span>
+                            <button onclick="removeCart(${idx})" class="text-slate-300 hover:text-red-500 transition"><i class="fa-solid fa-circle-xmark"></i></button>
+                        </div>
+                    </div>`;
+            });
+            document.getElementById('cartTotal').innerText = `NT$ ${Math.round(total).toLocaleString()}`;
         }
 
-        // 貨幣轉換
-        function convertCurrency() {
-            const jpy = document.getElementById('jpyInput').value;
-            const rate = 0.21;
-            document.getElementById('twdResult').innerText = `NT$ ${Math.round(jpy * rate).toLocaleString()}`;
+        function removeCart(idx) { cart.splice(idx, 1); renderCart(); }
+        function quickConvert() {
+            const val = document.getElementById('calcInput').value;
+            document.getElementById('calcResult').innerText = `NT$ ${Math.round(val * rate).toLocaleString()}`;
         }
-
-        // 添加備註
-        function addTodo() {
-            const text = prompt("輸入新的備忘項目：");
-            if (text) {
+        function addNote() {
+            const val = prompt("輸入備忘項目：");
+            if(val) {
                 const div = document.createElement('div');
-                div.className = "flex items-center gap-2 p-3 bg-white border border-slate-100 rounded-xl shadow-xs text-xs";
-                div.innerHTML = `<i class="fa-solid fa-check text-slate-300"></i> <span class="flex-1">${text}</span>`;
-                document.getElementById('todoList').appendChild(div);
+                div.className = "p-3 bg-white/50 rounded-xl text-[10px] font-bold border border-white shadow-sm text-slate-500";
+                div.innerText = `• ${val}`;
+                document.getElementById('customNotes').appendChild(div);
             }
         }
 
-        window.onload = renderApp;
+        window.onload = renderItinerary;
     </script>
 </body>
 </html>
