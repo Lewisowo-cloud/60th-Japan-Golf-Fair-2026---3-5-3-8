@@ -25,7 +25,7 @@
         </div>
         <div class="relative text-center px-6">
             <h1 class="text-4xl font-bold mb-3 tracking-widest text-white">JGF 2026</h1>
-            <p class="text-lg opacity-80 mb-10 text-white italic">拜訪客戶/Golf shap考察</p>
+            <p class="text-lg opacity-80 mb-10 text-white italic">拜訪客戶/Golf shop考察</p>
             <button onclick="enterApp()" class="bg-white text-black px-12 py-4 rounded-full font-bold text-lg btn-shadow animate-pulse">點擊進入行程</button>
         </div>
     </div>
@@ -104,7 +104,6 @@
     </nav>
 
     <script>
-        // --- 核心資料區：已更改為直接讀取 GitHub 相同資料夾下的檔案 ---
         const IMAGES = {
             day1: "./Day1.jpg",
             day2: "./Day2.jpg",
@@ -114,36 +113,35 @@
             golf: "./Golf shop.PNG"
         };
 
+        // --- 修正重點：Google Maps 連結全面更新為官方搜尋 API 格式 ---
         const SCHEDULE = [
             { day: 1, date: "2026/03/05", items: [
-                { time: "14:00", title: "抵達與入境 (NRT)", location: "成田國際機場 (T2)", desc: "國泰航空 CX504 ", map: "https://maps.app.goo.gl/r6R6H9aFjS3h8r3J6" },
-                { time: "16:00", title: "飯店 Check-in", location: "日航豐洲酒店 (Hotel JAL City)", desc: "東京都江東区豊洲 6-4-20", map: "https://maps.app.goo.gl/3K1yWvY7A8WbN2A86", web: "https://www.tokyo-toyosu.hoteljalcity.com/" },
+                { time: "14:00", title: "抵達與入境 (NRT)", location: "成田國際機場 (T2)", desc: "國泰航空 CX504", map: "https://www.google.com/maps/search/?api=1&query=成田國際機場" },
+                { time: "16:00", title: "飯店 Check-in", location: "日航豐洲酒店 (Hotel JAL City)", desc: "東京都江東区豊洲 6-4-20", map: "https://www.google.com/maps/search/?api=1&query=ホテルJALシティ東京豊洲", web: "https://www.tokyo-toyosu.hoteljalcity.com/" },
                 { time: "18:00", title: "商務晚餐", location: "與客戶餐敘", desc: "地點由日方安排", map: "" }
             ]},
             { day: 2, date: "2026/03/06", items: [
-                { time: "09:30", title: "商務拜訪", location: "TaylorMade Japan 青海辦公室", desc: "〒135-0064 東京都江東区青海 2-4-24", map: "https://maps.app.goo.gl/W8N5G9kK1Z9L5H3H8" },
-                { time: "13:00", title: "參展 JGF 2026", location: "PACIFICO Yokohama (橫濱國際平和會議場)", desc: "〒220-0012 神奈川県横浜市西区みなとみらい 1-1-1", map: "https://maps.app.goo.gl/GZ5D9J4aN1R7H4Fw8", web: "https://www.japangolffair.com/" },
-                { time: "18:30", title: "晚餐 (天婦羅)", location: "天婦羅「若竹」 (Wakatake)", desc: "高輪格蘭王子大飯店 1F", map: "https://maps.app.goo.gl/7A9Q8vB4bN4J7J5A8", web: "https://www.princehotels.com/takanawa/zh-hant/restaurant/wakatake-tempura-restaurant/", menu: "https://drive.google.com/file/d/1XY6LrzvbZVpMTN24MFvm5oYBZu7SnCn9/view?usp=drivesdk" }
+                { time: "09:30", title: "商務拜訪", location: "TaylorMade Japan 青海辦公室", desc: "〒135-0064 東京都江東区青海 2-4-24", map: "https://www.google.com/maps/search/?api=1&query=東京都江東区青海2-4-24+TaylorMade" },
+                { time: "13:00", title: "參展 JGF 2026", location: "PACIFICO Yokohama (橫濱國際平和會議場)", desc: "〒220-0012 神奈川県横浜市西区みなとみらい 1-1-1", map: "https://www.google.com/maps/search/?api=1&query=パシフィコ横浜", web: "https://www.japangolffair.com/" },
+                { time: "18:30", title: "晚餐 (天婦羅)", location: "天婦羅「若竹」 (Wakatake)", desc: "高輪格蘭王子大飯店 1F", map: "https://www.google.com/maps/search/?api=1&query=グランドプリンスホテル高輪+天婦羅若竹", web: "https://www.princehotels.com/takanawa/zh-hant/restaurant/wakatake-tempura-restaurant/", menu: "https://drive.google.com/file/d/1XY6LrzvbZVpMTN24MFvm5oYBZu7SnCn9/view?usp=drivesdk" }
             ]},
             { day: 3, date: "2026/03/07", items: [
-                { time: "10:30", title: "皇居參觀", location: "皇居周邊參觀", map: "https://maps.app.goo.gl/L9K4M8Y5kK8W3T3D7", guide: IMAGES.walk },
-                { time: "12:00", title: "Golf Shop 考察", location: "Victoria Golf (御茶之水店)", desc: "〒101-0052 千代田区神田小川町 2-4-14", map: "https://maps.app.goo.gl/P8Z8K6T9Q8R4M4J87", web: "https://store.victoriagolf.supersports.com/22281?utm_source=yext&utm_medium=local-listing&utm_campaign=yext-listing", guide: IMAGES.golf },
-                { time: "14:00", title: "Golf Shop 考察", location: "BicCamera 有樂町店 (Golf專區)", desc: "〒100-0006 千代田区有楽町 1-11-1", map: "https://maps.app.goo.gl/N5G4H6W2M4V2K5E57", web: "https://www.biccamera.com/bc/i/shop/shoplist/shop014.jsp?ref=gmb", guide: IMAGES.golf },
-                { time: "15:30", title: "Golf Shop 考察", location: "Double Eagle 銀座店", desc: "〒104-0061 中央区銀座 2-2-2 西銀座デパート 1F", map: "https://maps.app.goo.gl/M2F3J6K8R7D8S9G9A", web: "https://www.double-eagle-golf.com/", guide: IMAGES.golf },
-                { time: "17:30", title: "Golf Shop 考察", location: "TaylorMade 銀座旗艦店", desc: "〒104-0061 中央区銀座 6-4-3", map: "https://maps.app.goo.gl/D4K9J5Y8M2T5G6H67", web: "https://www.taylormadegolf.jp/shop_ginza.html", guide: IMAGES.golf },
-                { time: "18:30", title: "懷石料理晚餐", location: "和田倉 (Wadakura)", desc: "東京皇宮酒店 6F", map: "https://maps.app.goo.gl/J6H7K4F2T5D3G6H67", web: "https://en.palacehoteltokyo.com/restaurant/wadakura/", menu: "https://drive.google.com/file/d/17wuFs-fqcX7YlL37UoUYrXlww_loxbkB/view?usp=drivesdk" }
+                { time: "10:30", title: "皇居參觀", location: "皇居周邊參觀", map: "https://www.google.com/maps/search/?api=1&query=皇居", guide: IMAGES.walk },
+                { time: "12:00", title: "Golf Shop 考察", location: "Victoria Golf (御茶之水店)", desc: "〒101-0052 千代田区神田小川町 2-4-14", map: "https://www.google.com/maps/search/?api=1&query=ヴィクトリアゴルフ御茶ノ水店", web: "https://store.victoriagolf.supersports.com/22281?utm_source=yext&utm_medium=local-listing&utm_campaign=yext-listing", guide: IMAGES.golf },
+                { time: "14:00", title: "Golf Shop 考察", location: "BicCamera 有樂町店 (Golf專區)", desc: "〒100-0006 千代田区有楽町 1-11-1", map: "https://www.google.com/maps/search/?api=1&query=ビックカメラ有楽町店", web: "https://www.biccamera.com/bc/i/shop/shoplist/shop014.jsp?ref=gmb", guide: IMAGES.golf },
+                { time: "15:30", title: "Golf Shop 考察", location: "Double Eagle 銀座店", desc: "〒104-0061 中央区銀座 2-2-2 西銀座デパート 1F", map: "https://www.google.com/maps/search/?api=1&query=ダブルイーグル銀座店", web: "https://www.double-eagle-golf.com/", guide: IMAGES.golf },
+                { time: "17:30", title: "Golf Shop 考察", location: "TaylorMade 銀座旗艦店", desc: "〒104-0061 中央区銀座 6-4-3", map: "https://www.google.com/maps/search/?api=1&query=テーラーメイド銀座", web: "https://www.taylormadegolf.jp/shop_ginza.html", guide: IMAGES.golf },
+                { time: "18:30", title: "懷石料理晚餐", location: "和田倉 (Wadakura)", desc: "東京皇宮酒店 6F", map: "https://www.google.com/maps/search/?api=1&query=パレスホテル東京+和田倉", web: "https://en.palacehoteltokyo.com/restaurant/wadakura/", menu: "https://drive.google.com/file/d/17wuFs-fqcX7YlL37UoUYrXlww_loxbkB/view?usp=drivesdk" }
             ]},
             { day: 4, date: "2026/03/08", items: [
                 { time: "09:30", title: "飯店 Check-out", location: "辦理退房手續", desc: "準備前往機場", map: "" },
-                { time: "11:10", title: "機場 Check in", location: "成田國際機場 (NRT)", desc: "國泰航空的報到櫃檯", map: "https://maps.app.goo.gl/r6R6H9aFjS3h8r3J6" },
-                { time: "14:10", title: "啟程回國", location: "國泰航空 CX527", desc: "成田飛往香港", map: "https://maps.app.goo.gl/r6R6H9aFjS3h8r3J6" }
+                { time: "11:10", title: "機場 Check in", location: "成田國際機場 (NRT)", desc: "國泰航空的報到櫃檯", map: "https://www.google.com/maps/search/?api=1&query=成田國際機場" },
+                { time: "14:10", title: "啟程回國", location: "國泰航空 CX527", desc: "成田飛往香港", map: "https://www.google.com/maps/search/?api=1&query=成田國際機場" }
             ]}
         ];
 
         let currentRate = 0.21;
         let shoppingItems = [];
-
-        // --- 功能邏輯區 ---
 
         async function fetchExchangeRate() {
             try {
@@ -162,7 +160,7 @@
                 document.getElementById('splash').classList.add('hidden');
             }, 1000);
             fetchExchangeRate();
-            showDay(1); // 預設顯示第一天
+            showDay(1); 
             loadSavedData();
         }
 
@@ -171,11 +169,9 @@
             const dayData = SCHEDULE.find(d => d.day === dayNum);
             document.getElementById('top-date').innerText = dayData.date;
             
-            // 動態背景切換
             const bgUrl = IMAGES['day' + dayNum];
             document.getElementById('appBody').style.backgroundImage = `linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('${bgUrl}')`;
             
-            // 更新底部導覽按鈕狀態
             for(let i=1; i<=4; i++) {
                 const navBtn = document.getElementById(`nav-${i}`);
                 if (i === dayNum) {
@@ -185,7 +181,6 @@
                 }
             }
 
-            // 渲染該天的行程卡片
             let html = `<div class="space-y-4 animate-[fadeIn_0.5s_ease-out]">`;
             dayData.items.forEach(item => {
                 html += `
@@ -227,7 +222,6 @@
             document.getElementById('twdOutput').value = Math.round(jpy * currentRate);
         }
 
-        // --- 採購清單與備註 持久化處理 (LocalStorage) ---
         function saveNotes() { localStorage.setItem('jgf_notes', document.getElementById('personalNote').value); }
         function addShoppingItem() { shoppingItems.push({ name: '', price: '' }); renderShoppingList(); saveShopping(); }
         function deleteShoppingItem(idx) { shoppingItems.splice(idx, 1); renderShoppingList(); saveShopping(); }
@@ -257,11 +251,9 @@
         }
 
         function loadSavedData() {
-            // 載入備註
             const savedNotes = localStorage.getItem('jgf_notes');
             if (savedNotes) document.getElementById('personalNote').value = savedNotes;
             
-            // 載入採購明細
             const savedShopping = localStorage.getItem('jgf_shopping');
             if (savedShopping) {
                 shoppingItems = JSON.parse(savedShopping);
