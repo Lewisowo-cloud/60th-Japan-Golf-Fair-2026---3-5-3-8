@@ -104,14 +104,14 @@
     </nav>
 
     <script>
-        // --- 核心資料區：確保背景圖與導覽圖皆轉換為 uc?export=view 直連格式 ---
+        // --- 核心資料區：已更改為直接讀取 GitHub 相同資料夾下的檔案 ---
         const IMAGES = {
-            day1: "https://drive.google.com/uc?export=view&id=1a_gJz8kYNAz-2r6wQJJy_gS1W5tu8ML8",
-            day2: "https://drive.google.com/uc?export=view&id=1yAwTOyA030im2pASOhzlilzRQZ2IohnM",
-            day3: "https://drive.google.com/uc?export=view&id=1-hpEkvZqCNoWt9xJkYUXEYLdPvY9EFy-",
-            day4: "https://drive.google.com/uc?export=view&id=1_VgQlD5owTE3a9KfZherdtxf-zoNMRCf",
-            walk: "https://drive.google.com/uc?export=view&id=15ktJSAz6R_C5a4IiH8ZzFmy5crOAVbkg",
-            golf: "https://drive.google.com/uc?export=view&id=1UGYS5k8yEnK4ejpp3cWZF4tTY9DDB7xz"
+            day1: "./Day1.jpg",
+            day2: "./Day2.jpg",
+            day3: "./Day3.jpg",
+            day4: "./Day4.jpg",
+            walk: "./Walk.PNG",
+            golf: "./Golf shop.PNG"
         };
 
         const SCHEDULE = [
@@ -171,7 +171,7 @@
             const dayData = SCHEDULE.find(d => d.day === dayNum);
             document.getElementById('top-date').innerText = dayData.date;
             
-            // 【重要修復】：動態背景切換，讀取 IMAGES 設定好的 uc?export=view 直連網址
+            // 動態背景切換
             const bgUrl = IMAGES['day' + dayNum];
             document.getElementById('appBody').style.backgroundImage = `linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('${bgUrl}')`;
             
