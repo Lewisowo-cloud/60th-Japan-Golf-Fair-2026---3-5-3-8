@@ -8,14 +8,16 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;700&display=swap');
-        body { font-family: 'Noto Sans TC', sans-serif; transition: background 0.8s ease-in-out; background-attachment: fixed; background-size: cover; background-position: center; }
+        body { font-family: 'Noto Sans TC', sans-serif; transition: background-image 0.5s ease-in-out; background-attachment: fixed; background-size: cover; background-position: center; min-height: 100vh; background-color: #0f172a; }
         .glass { background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 1.5rem; }
         .active-tab { background: rgba(255, 255, 255, 0.3); border-bottom: 4px solid #fff; font-weight: bold; }
         .btn-shadow { box-shadow: 0 4px 15px rgba(0,0,0,0.4); }
         input, textarea { background: rgba(255, 255, 255, 0.1) !important; border: 1px solid rgba(255, 255, 255, 0.2) !important; color: white !important; }
+        /* 避免背景載入時閃爍 */
+        #appBody { background-image: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)); }
     </style>
 </head>
-<body class="bg-slate-900 text-white min-h-screen pb-28" id="appBody">
+<body class="text-white pb-28" id="appBody">
 
     <div id="splash" class="fixed inset-0 z-[100] bg-black flex flex-col items-center justify-center transition-opacity duration-1000">
         <div class="absolute inset-0 opacity-60">
@@ -30,12 +32,12 @@
 
     <header class="p-4 flex justify-between items-center sticky top-0 z-50">
         <div class="flex space-x-3">
-            <button onclick="showSection('memo')" class="p-4 glass hover:bg-white/20"><i class="fa-solid fa-clipboard-check text-xl"></i></button>
-            <button onclick="showSection('assistant')" class="p-4 glass hover:bg-white/20"><i class="fa-solid fa-coins text-xl"></i></button>
-            <button onclick="showSection('shopping')" class="p-4 glass hover:bg-white/20"><i class="fa-solid fa-cart-shopping text-xl"></i></button>
+            <button onclick="showSection('memo')" class="p-3 glass hover:bg-white/20"><i class="fa-solid fa-clipboard-check text-xl"></i></button>
+            <button onclick="showSection('assistant')" class="p-3 glass hover:bg-white/20"><i class="fa-solid fa-coins text-xl"></i></button>
+            <button onclick="showSection('shopping')" class="p-3 glass hover:bg-white/20"><i class="fa-solid fa-cart-shopping text-xl"></i></button>
         </div>
         <div class="text-right">
-            <p id="top-date" class="font-bold text-sm bg-black/40 px-3 py-1 rounded-full border border-white/20">2026/03/05</p>
+            <p id="top-date" class="font-bold text-sm bg-black/50 px-3 py-1 rounded-full border border-white/20 shadow-lg">2026/03/05</p>
         </div>
     </header>
 
@@ -44,38 +46,38 @@
 
         <div id="section-memo" class="hidden space-y-4 pb-10">
             <h2 class="text-2xl font-bold mb-4 flex items-center"><i class="fa-solid fa-passport mr-2"></i> 行前備忘</h2>
-            <div class="glass p-5 space-y-4">
+            <div class="glass p-5 space-y-4 shadow-xl">
                 <a href="https://www.vjw.digital.go.jp/main/#/vjwplo001" target="_blank" class="flex items-center justify-between border-b border-white/10 pb-4">
                     <span class="flex items-center font-bold text-orange-300">Visit Japan Web 入境申報</span>
                     <i class="fa-solid fa-external-link-alt text-xs"></i>
                 </a>
                 <div class="flex items-center justify-between border-b border-white/10 pb-4">
                     <span class="flex items-center font-bold text-green-300">JGF 2026 門票預購 (¥1,000)</span>
-                    <a href="https://www.japangolffair.com/" target="_blank" class="text-blue-300 underline">官網</a>
+                    <a href="https://www.japangolffair.com/" target="_blank" class="text-blue-300 underline font-bold">官網</a>
                 </div>
                 <div>
-                    <p class="mb-2 text-sm font-bold opacity-80 italic">個人備註 (下次開啟會自動載入)：</p>
-                    <textarea id="personalNote" oninput="saveNotes()" class="w-full rounded-xl p-4 focus:outline-none" rows="6" placeholder="記錄您的私人提醒..."></textarea>
+                    <p class="mb-2 text-sm font-bold opacity-80 italic">個人備註 (關閉網頁自動保留)：</p>
+                    <textarea id="personalNote" oninput="saveNotes()" class="w-full rounded-xl p-4 focus:outline-none focus:ring-1 focus:ring-white/50" rows="6" placeholder="記錄您的私人提醒..."></textarea>
                 </div>
             </div>
         </div>
 
         <div id="section-assistant" class="hidden space-y-4">
             <h2 class="text-2xl font-bold mb-4 flex items-center"><i class="fa-solid fa-calculator mr-2"></i> 商務助手</h2>
-            <div class="glass p-5">
+            <div class="glass p-5 shadow-xl">
                 <h3 class="font-bold mb-4 text-sm text-white/70 uppercase">即時匯率換算 (JPY ➔ TWD)</h3>
                 <p id="rateStatus" class="text-[10px] text-green-400 mb-2 italic">更新匯率中...</p>
                 <div class="space-y-4">
-                    <input type="number" id="jpyInput" oninput="convertCurrency()" class="w-full rounded-xl p-4 text-2xl" placeholder="日圓 JPY">
-                    <div class="text-center text-white/30"><i class="fa-solid fa-arrow-down text-2xl"></i></div>
-                    <input type="number" id="twdOutput" readonly class="w-full rounded-xl p-4 text-2xl text-green-400" placeholder="台幣 TWD">
+                    <input type="number" id="jpyInput" oninput="convertCurrency()" class="w-full rounded-xl p-4 text-2xl font-bold outline-none" placeholder="輸入日圓 JPY">
+                    <div class="text-center text-white/30"><i class="fa-solid fa-arrow-down-long text-2xl"></i></div>
+                    <input type="number" id="twdOutput" readonly class="w-full rounded-xl p-4 text-2xl text-green-400 font-bold outline-none" placeholder="台幣 TWD">
                 </div>
             </div>
         </div>
 
         <div id="section-shopping" class="hidden space-y-4 pb-10">
             <h2 class="text-2xl font-bold mb-4 flex items-center"><i class="fa-solid fa-receipt mr-2"></i> 採購明細</h2>
-            <div class="glass p-5">
+            <div class="glass p-5 shadow-xl">
                 <div id="shoppingListContainer" class="space-y-3"></div>
                 <button onclick="addShoppingItem()" class="w-full mt-4 border-2 border-dashed border-white/30 py-4 rounded-2xl hover:bg-white/10 transition-all font-bold">+ 新增採購項目</button>
                 <div class="mt-8 pt-4 border-t border-white/20">
@@ -86,80 +88,81 @@
         </div>
     </main>
 
-    <nav class="fixed bottom-0 left-0 right-0 glass m-4 mb-6 px-2 py-3 flex justify-around items-center z-50">
-        <button onclick="showDay(1)" id="nav-1" class="flex flex-col items-center px-5 py-2 rounded-2xl">
+    <nav class="fixed bottom-0 left-0 right-0 glass m-4 mb-6 px-2 py-3 flex justify-around items-center z-50 shadow-2xl">
+        <button onclick="showDay(1)" id="nav-1" class="flex flex-col items-center px-4 py-2 rounded-2xl transition-all">
             <span class="text-[10px] opacity-60">03/05</span><span class="font-bold text-lg">D1</span>
         </button>
-        <button onclick="showDay(2)" id="nav-2" class="flex flex-col items-center px-5 py-2 rounded-2xl">
+        <button onclick="showDay(2)" id="nav-2" class="flex flex-col items-center px-4 py-2 rounded-2xl transition-all">
             <span class="text-[10px] opacity-60">03/06</span><span class="font-bold text-lg">D2</span>
         </button>
-        <button onclick="showDay(3)" id="nav-3" class="flex flex-col items-center px-5 py-2 rounded-2xl">
+        <button onclick="showDay(3)" id="nav-3" class="flex flex-col items-center px-4 py-2 rounded-2xl transition-all">
             <span class="text-[10px] opacity-60">03/07</span><span class="font-bold text-lg">D3</span>
         </button>
-        <button onclick="showDay(4)" id="nav-4" class="flex flex-col items-center px-5 py-2 rounded-2xl">
+        <button onclick="showDay(4)" id="nav-4" class="flex flex-col items-center px-4 py-2 rounded-2xl transition-all">
             <span class="text-[10px] opacity-60">03/08</span><span class="font-bold text-lg">D4</span>
         </button>
     </nav>
 
     <script>
-        // --- 資料設定 (已整合您提供的雲端 ID) ---
-        const DRIVE_BASE = "https://drive.google.com/uc?export=view&id=";
+        // --- 核心資料區：確保背景圖與導覽圖皆轉換為 uc?export=view 直連格式 ---
         const IMAGES = {
-            day1: DRIVE_BASE + "1a_gJz8kYNAz-2r6wQJJy_gS1W5tu8ML8",
-            day2: DRIVE_BASE + "1yAwTOyA030im2pASOhzlilzRQZ2IohnM",
-            day3: DRIVE_BASE + "1-hpEkvZqCNoWt9xJkYUXEYLdPvY9EFy-",
-            day4: DRIVE_BASE + "1_VgQlD5owTE3a9KfZherdtxf-zoNMRCf",
-            walk: DRIVE_BASE + "15ktJSAz6R_C5a4IiH8ZzFmy5crOAVbkg",
-            golf: DRIVE_BASE + "1UGYS5k8yEnK4ejpp3cWZF4tTY9DDB7xz"
+            day1: "https://drive.google.com/uc?export=view&id=1a_gJz8kYNAz-2r6wQJJy_gS1W5tu8ML8",
+            day2: "https://drive.google.com/uc?export=view&id=1yAwTOyA030im2pASOhzlilzRQZ2IohnM",
+            day3: "https://drive.google.com/uc?export=view&id=1-hpEkvZqCNoWt9xJkYUXEYLdPvY9EFy-",
+            day4: "https://drive.google.com/uc?export=view&id=1_VgQlD5owTE3a9KfZherdtxf-zoNMRCf",
+            walk: "https://drive.google.com/uc?export=view&id=15ktJSAz6R_C5a4IiH8ZzFmy5crOAVbkg",
+            golf: "https://drive.google.com/uc?export=view&id=1UGYS5k8yEnK4ejpp3cWZF4tTY9DDB7xz"
         };
 
         const SCHEDULE = [
             { day: 1, date: "2026/03/05", items: [
-                { time: "14:00", title: "抵達與入境 (NRT)", location: "成田國際機場", desc: "國泰航空 CX504", map: "https://maps.app.goo.gl/9R6q1xP2D3BfGkMv5" },
-                { time: "16:00", title: "飯店 Check-in", location: "日航豐洲酒店", desc: "東京都江東区豊洲 6-4-20", map: "https://maps.app.goo.gl/35C91Y5WvR4C1E6H6", web: "https://www.tokyo-toyosu.hoteljalcity.com/" },
-                { time: "18:00", title: "商務晚餐", location: "與客戶晚餐", desc: "商務對接餐敘", map: "" }
+                { time: "14:00", title: "抵達與入境 (NRT)", location: "成田國際機場 (T2)", desc: "國泰航空 CX504 | 報到櫃檯 F 區", map: "https://maps.app.goo.gl/r6R6H9aFjS3h8r3J6" },
+                { time: "16:00", title: "飯店 Check-in", location: "日航豐洲酒店 (Hotel JAL City)", desc: "東京都江東区豊洲 6-4-20", map: "https://maps.app.goo.gl/3K1yWvY7A8WbN2A86", web: "https://www.tokyo-toyosu.hoteljalcity.com/" },
+                { time: "18:00", title: "商務晚餐", location: "與客戶餐敘", desc: "地點由日方安排", map: "" }
             ]},
             { day: 2, date: "2026/03/06", items: [
-                { time: "09:30", title: "商務拜訪", location: "TaylorMade 青海辦公室", map: "https://maps.app.goo.gl/Wv4P4R5M7R5P7", desc: "〒135-0064 東京都江東区青海 2-4-24" },
-                { time: "13:00", title: "參展 JGF 2026", location: "PACIFICO Yokohama", desc: "第 60 屆日本國際高爾夫展", map: "https://maps.app.goo.gl/9R6q1xP2D3BfGkMv5", web: "https://www.japangolffair.com/" },
-                { time: "18:30", title: "晚餐 (天婦羅)", location: "若竹 (Wakatake)", desc: "高輪格蘭王子大飯店 1F", map: "https://maps.app.goo.gl/yL5M4R5P7R5P7", web: "https://www.princehotels.com/takanawa/zh-hant/restaurant/wakatake-tempura-restaurant/", menu: "https://www.princehotels.co.jp/file.jsp?id=137418" }
+                { time: "09:30", title: "商務拜訪", location: "TaylorMade Japan 青海辦公室", desc: "〒135-0064 東京都江東区青海 2-4-24", map: "https://maps.app.goo.gl/W8N5G9kK1Z9L5H3H8" },
+                { time: "13:00", title: "參展 JGF 2026", location: "PACIFICO Yokohama (橫濱國際平和會議場)", desc: "〒220-0012 神奈川県横浜市西区みなとみらい 1-1-1", map: "https://maps.app.goo.gl/GZ5D9J4aN1R7H4Fw8", web: "https://www.japangolffair.com/" },
+                { time: "18:30", title: "晚餐 (天婦羅)", location: "天婦羅「若竹」 (Wakatake)", desc: "高輪格蘭王子大飯店 1F", map: "https://maps.app.goo.gl/7A9Q8vB4bN4J7J5A8", web: "https://www.princehotels.com/takanawa/zh-hant/restaurant/wakatake-tempura-restaurant/", menu: "https://drive.google.com/file/d/1XY6LrzvbZVpMTN24MFvm5oYBZu7SnCn9/view?usp=drivesdk" }
             ]},
             { day: 3, date: "2026/03/07", items: [
-                { time: "10:30", title: "考察", location: "皇居周邊參觀", map: "https://maps.app.goo.gl/yL5M4R5P7R5P7", guide: IMAGES.walk },
-                { time: "12:00", title: "Golf Shop 考察", location: "Victoria Golf (御茶之水店)", map: "https://maps.app.goo.gl/yL5M4R5P7R5P7", web: "https://store.victoriagolf.supersports.com/22281?utm_source=yext&utm_medium=local-listing&utm_campaign=yext-listing", guide: IMAGES.golf },
-                { time: "14:00", title: "Golf Shop 考察", location: "BicCamera 有樂町店", map: "https://maps.app.goo.gl/yL5M4R5P7R5P7", web: "https://www.biccamera.com/bc/i/shop/shoplist/shop014.jsp?ref=gmb", guide: IMAGES.golf },
-                { time: "15:30", title: "Golf Shop 考察", location: "Double Eagle 銀座店", map: "https://maps.app.goo.gl/yL5M4R5P7R5P7", web: "https://www.double-eagle-golf.com/", guide: IMAGES.golf },
-                { time: "17:30", title: "旗艦店考察", location: "TaylorMade 銀座店", map: "https://maps.app.goo.gl/yL5M4R5P7R5P7", web: "https://www.taylormadegolf.jp/shop_ginza.html", guide: IMAGES.golf },
-                { time: "18:30", title: "晚餐", location: "懷石料理「和田倉」", desc: "東京皇宮酒店 6F", map: "https://maps.app.goo.gl/yL5M4R5P7R5P7", web: "https://en.palacehoteltokyo.com/restaurant/wadakura/", menu: "https://en.palacehoteltokyo.com/wp-content/uploads/2026.02.01-Wadakura-Dinner-Menu.pdf" }
+                { time: "10:30", title: "商務觀摩", location: "皇居周邊參觀", desc: "設計工藝考察", map: "https://maps.app.goo.gl/L9K4M8Y5kK8W3T3D7", guide: IMAGES.walk },
+                { time: "12:00", title: "Golf Shop 考察", location: "Victoria Golf (御茶之水店)", desc: "〒101-0052 千代田区神田小川町 2-4-14", map: "https://maps.app.goo.gl/P8Z8K6T9Q8R4M4J87", web: "https://store.victoriagolf.supersports.com/22281?utm_source=yext&utm_medium=local-listing&utm_campaign=yext-listing", guide: IMAGES.golf },
+                { time: "14:00", title: "Golf Shop 考察", location: "BicCamera 有樂町店 (Golf專區)", desc: "〒100-0006 千代田区有楽町 1-11-1", map: "https://maps.app.goo.gl/N5G4H6W2M4V2K5E57", web: "https://www.biccamera.com/bc/i/shop/shoplist/shop014.jsp?ref=gmb", guide: IMAGES.golf },
+                { time: "15:30", title: "Golf Shop 考察", location: "Double Eagle 銀座店", desc: "〒104-0061 中央区銀座 2-2-2 西銀座デパート 1F", map: "https://maps.app.goo.gl/M2F3J6K8R7D8S9G9A", web: "https://www.double-eagle-golf.com/", guide: IMAGES.golf },
+                { time: "17:30", title: "Golf Shop 考察", location: "TaylorMade 銀座旗艦店", desc: "〒104-0061 中央区銀座 6-4-3", map: "https://maps.app.goo.gl/D4K9J5Y8M2T5G6H67", web: "https://www.taylormadegolf.jp/shop_ginza.html", guide: IMAGES.golf },
+                { time: "18:30", title: "懷石料理晚餐", location: "和田倉 (Wadakura)", desc: "東京皇宮酒店 6F", map: "https://maps.app.goo.gl/J6H7K4F2T5D3G6H67", web: "https://en.palacehoteltokyo.com/restaurant/wadakura/", menu: "https://drive.google.com/file/d/17wuFs-fqcX7YlL37UoUYrXlww_loxbkB/view?usp=drivesdk" }
             ]},
             { day: 4, date: "2026/03/08", items: [
-                { time: "09:30", title: "飯店 Check-out", location: "準備回程", map: "" },
-                { time: "11:10", title: "機場 Check in", location: "成田國際機場 (NRT)", desc: "國泰航空的報到櫃檯", map: "https://maps.app.goo.gl/9R6q1xP2D3BfGkMv5" },
-                { time: "14:10", title: "啟程回國", location: "成田國際機場 (NRT)", desc: "國泰航空 CX527", map: "https://maps.app.goo.gl/9R6q1xP2D3BfGkMv5" }
+                { time: "09:30", title: "飯店 Check-out", location: "辦理退房手續", desc: "準備前往機場", map: "" },
+                { time: "11:10", title: "機場 Check in", location: "成田國際機場 (NRT)", desc: "國泰航空的報到櫃檯", map: "https://maps.app.goo.gl/r6R6H9aFjS3h8r3J6" },
+                { time: "14:10", title: "啟程回國", location: "國泰航空 CX527", desc: "成田飛往香港/台北", map: "https://maps.app.goo.gl/r6R6H9aFjS3h8r3J6" }
             ]}
         ];
 
         let currentRate = 0.21;
         let shoppingItems = [];
 
-        // --- 核心邏輯 ---
+        // --- 功能邏輯區 ---
 
-        async function fetchRate() {
+        async function fetchExchangeRate() {
             try {
                 const res = await fetch('https://open.er-api.com/v6/latest/JPY');
                 const data = await res.json();
                 currentRate = data.rates.TWD;
-                document.getElementById('rateStatus').innerText = `即時匯率: 1 JPY = ${currentRate.toFixed(4)} TWD`;
+                document.getElementById('rateStatus').innerText = `已同步即時匯率: 1 JPY = ${currentRate.toFixed(4)} TWD`;
             } catch (e) {
-                document.getElementById('rateStatus').innerText = "匯率抓取失敗，預設 0.21";
+                document.getElementById('rateStatus').innerText = "匯率抓取失敗，使用預設值 0.21";
             }
         }
 
         function enterApp() {
             document.getElementById('splash').classList.add('opacity-0');
-            setTimeout(() => document.getElementById('splash').classList.add('hidden'), 1000);
-            fetchRate();
-            showDay(1);
+            setTimeout(() => {
+                document.getElementById('splash').classList.add('hidden');
+            }, 1000);
+            fetchExchangeRate();
+            showDay(1); // 預設顯示第一天
             loadSavedData();
         }
 
@@ -168,28 +171,36 @@
             const dayData = SCHEDULE.find(d => d.day === dayNum);
             document.getElementById('top-date').innerText = dayData.date;
             
-            // 重要：背景動態切換
-            document.getElementById('appBody').style.backgroundImage = `linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('${IMAGES['day'+dayNum]}')`;
+            // 【重要修復】：動態背景切換，讀取 IMAGES 設定好的 uc?export=view 直連網址
+            const bgUrl = IMAGES['day' + dayNum];
+            document.getElementById('appBody').style.backgroundImage = `linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('${bgUrl}')`;
             
-            // 導覽樣式
+            // 更新底部導覽按鈕狀態
             for(let i=1; i<=4; i++) {
-                document.getElementById(`nav-${i}`).className = i === dayNum ? "flex flex-col items-center px-5 py-2 rounded-2xl active-tab" : "flex flex-col items-center px-5 py-2 rounded-2xl opacity-60";
+                const navBtn = document.getElementById(`nav-${i}`);
+                if (i === dayNum) {
+                    navBtn.className = "flex flex-col items-center px-4 py-2 rounded-2xl active-tab transition-all";
+                } else {
+                    navBtn.className = "flex flex-col items-center px-4 py-2 rounded-2xl opacity-50 hover:opacity-80 transition-all";
+                }
             }
 
-            let html = `<div class="space-y-4 animate-fadeIn">`;
+            // 渲染該天的行程卡片
+            let html = `<div class="space-y-4 animate-[fadeIn_0.5s_ease-out]">`;
             dayData.items.forEach(item => {
                 html += `
                     <div class="glass p-5 flex gap-4 items-start shadow-xl">
-                        <div class="text-xs font-bold w-12 pt-1 opacity-70">${item.time || ''}</div>
+                        <div class="text-sm font-bold w-12 pt-1 text-white opacity-80">${item.time || ''}</div>
                         <div class="flex-1">
-                            <h3 class="font-bold text-lg mb-1">${item.title}</h3>
+                            <h3 class="font-bold text-lg leading-tight mb-1 text-white">${item.title}</h3>
                             <p class="text-white/80 text-sm mb-1">${item.location}</p>
-                            ${item.desc ? `<p class="text-white/40 text-[11px] italic mb-3 leading-snug">${item.desc}</p>` : ''}
+                            ${item.desc ? `<p class="text-white/50 text-[11px] italic mb-3 leading-snug">${item.desc}</p>` : ''}
+                            
                             <div class="flex gap-2 flex-wrap mt-2">
-                                ${item.map ? `<a href="${item.map}" target="_blank" class="bg-blue-600/60 px-3 py-1.5 rounded-full text-[10px] font-bold btn-shadow"><i class="fa-solid fa-map-location-dot mr-1"></i>Google Maps</a>` : ''}
-                                ${item.web ? `<a href="${item.web}" target="_blank" class="bg-gray-500/50 px-3 py-1.5 rounded-full text-[10px] font-bold btn-shadow">官網</a>` : ''}
-                                ${item.menu ? `<a href="${item.menu}" target="_blank" class="bg-green-600/60 px-3 py-1.5 rounded-full text-[10px] font-bold btn-shadow"><i class="fa-solid fa-utensils mr-1"></i>菜單</a>` : ''}
-                                ${item.guide ? `<a href="${item.guide}" target="_blank" class="bg-orange-500/60 px-3 py-1.5 rounded-full text-[10px] font-bold btn-shadow">導覽圖</a>` : ''}
+                                ${item.map ? `<a href="${item.map}" target="_blank" class="bg-blue-600/70 px-3 py-1.5 rounded-full text-[10px] font-bold btn-shadow flex items-center hover:bg-blue-500"><i class="fa-solid fa-location-dot mr-1 text-white"></i>Google Maps</a>` : ''}
+                                ${item.web ? `<a href="${item.web}" target="_blank" class="bg-white/10 px-3 py-1.5 rounded-full text-[10px] font-bold btn-shadow flex items-center hover:bg-white/20"><i class="fa-solid fa-globe mr-1"></i>官網</a>` : ''}
+                                ${item.menu ? `<a href="${item.menu}" target="_blank" class="bg-emerald-600/70 px-3 py-1.5 rounded-full text-[10px] font-bold btn-shadow flex items-center hover:bg-emerald-500"><i class="fa-solid fa-utensils mr-1"></i>菜單</a>` : ''}
+                                ${item.guide ? `<a href="${item.guide}" target="_blank" class="bg-orange-500/70 px-3 py-1.5 rounded-full text-[10px] font-bold btn-shadow flex items-center hover:bg-orange-400"><i class="fa-solid fa-map mr-1"></i>導覽圖</a>` : ''}
                             </div>
                         </div>
                     </div>`;
@@ -205,7 +216,9 @@
         }
 
         function hideAllSections() {
-            ['memo', 'assistant', 'shopping'].forEach(s => document.getElementById(`section-${s}`).classList.add('hidden'));
+            ['memo', 'assistant', 'shopping'].forEach(s => {
+                document.getElementById(`section-${s}`).classList.add('hidden');
+            });
             document.getElementById('schedule-container').classList.remove('hidden');
         }
 
@@ -214,35 +227,45 @@
             document.getElementById('twdOutput').value = Math.round(jpy * currentRate);
         }
 
-        // --- 持久化儲存 ---
+        // --- 採購清單與備註 持久化處理 (LocalStorage) ---
         function saveNotes() { localStorage.setItem('jgf_notes', document.getElementById('personalNote').value); }
-        function addShoppingItem() { shoppingItems.push({ name: '', price: 0 }); renderShoppingList(); saveShopping(); }
+        function addShoppingItem() { shoppingItems.push({ name: '', price: '' }); renderShoppingList(); saveShopping(); }
+        function deleteShoppingItem(idx) { shoppingItems.splice(idx, 1); renderShoppingList(); saveShopping(); }
+        function updateShoppingItem(idx, field, val) { shoppingItems[idx][field] = val; saveShopping(); calcTotal(); }
         function saveShopping() { localStorage.setItem('jgf_shopping', JSON.stringify(shoppingItems)); }
-        function updateItem(idx, field, val) { shoppingItems[idx][field] = val; saveShopping(); calcTotal(); }
-        function deleteItem(idx) { shoppingItems.splice(idx, 1); renderShoppingList(); saveShopping(); }
 
         function renderShoppingList() {
             const container = document.getElementById('shoppingListContainer');
-            container.innerHTML = shoppingItems.map((item, i) => `
-                <div class="flex gap-2 bg-white/10 p-3 rounded-xl items-center">
-                    <input type="text" value="${item.name}" oninput="updateItem(${i}, 'name', this.value)" class="bg-transparent flex-1 outline-none text-sm" placeholder="商品名稱">
-                    <input type="number" value="${item.price}" oninput="updateItem(${i}, 'price', this.value)" class="bg-transparent w-20 text-right outline-none text-sm text-green-300 font-bold" placeholder="JPY">
-                    <button onclick="deleteItem(${i})" class="text-red-400 px-2"><i class="fa-solid fa-trash-can"></i></button>
-                </div>
-            `).join('');
+            if (shoppingItems.length === 0) {
+                container.innerHTML = `<p class="text-center text-white/50 text-sm py-4">目前尚無採購項目</p>`;
+            } else {
+                container.innerHTML = shoppingItems.map((item, i) => `
+                    <div class="flex gap-2 bg-white/10 p-3 rounded-xl items-center shadow-inner">
+                        <input type="text" value="${item.name}" oninput="updateShoppingItem(${i}, 'name', this.value)" class="bg-transparent flex-1 outline-none text-sm font-bold placeholder-white/40" placeholder="項目內容">
+                        <input type="number" value="${item.price}" oninput="updateShoppingItem(${i}, 'price', this.value)" class="bg-transparent w-20 text-right outline-none text-sm text-green-300 font-bold placeholder-white/40" placeholder="JPY">
+                        <button onclick="deleteShoppingItem(${i})" class="text-white/40 hover:text-red-400 ml-1 transition-colors"><i class="fa-solid fa-circle-xmark text-lg"></i></button>
+                    </div>
+                `).join('');
+            }
             calcTotal();
         }
 
         function calcTotal() {
-            const total = shoppingItems.reduce((s, i) => s + Number(i.price || 0), 0);
+            const total = shoppingItems.reduce((sum, item) => sum + Number(item.price || 0), 0);
             document.getElementById('totalJPY').innerText = total.toLocaleString();
             document.getElementById('totalTWD').innerText = Math.round(total * currentRate).toLocaleString();
         }
 
         function loadSavedData() {
-            document.getElementById('personalNote').value = localStorage.getItem('jgf_notes') || '';
-            const saved = localStorage.getItem('jgf_shopping');
-            if(saved) { shoppingItems = JSON.parse(saved); renderShoppingList(); }
+            // 載入備註
+            const savedNotes = localStorage.getItem('jgf_notes');
+            if (savedNotes) document.getElementById('personalNote').value = savedNotes;
+            
+            // 載入採購明細
+            const savedShopping = localStorage.getItem('jgf_shopping');
+            if (savedShopping) {
+                shoppingItems = JSON.parse(savedShopping);
+            }
         }
     </script>
 </body>
