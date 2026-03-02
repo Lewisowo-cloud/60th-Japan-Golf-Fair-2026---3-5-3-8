@@ -20,8 +20,8 @@
             <img src="https://images.unsplash.com/photo-1542051841857-5f90071e7989?q=80&w=2070&auto=format&fit=crop" class="w-full h-full object-cover">
         </div>
         <div class="relative text-center px-6">
-            <h1 class="text-4xl font-bold mb-2 tracking-widest">JGF 2026</h1>
-            <p class="text-lg opacity-80 mb-8">日本高球商務考察團</p>
+            <h1 class="text-4xl font-bold mb-2 tracking-widest text-white">JGF 2026</h1>
+            <p class="text-lg opacity-80 mb-8 text-white">日本高球商務考察團</p>
             <button onclick="enterApp()" class="bg-white text-black px-8 py-3 rounded-full font-bold shadow-lg animate-pulse">點擊進入行程</button>
         </div>
     </div>
@@ -42,19 +42,19 @@
         <div id="schedule-container"></div>
 
         <div id="section-memo" class="hidden space-y-4 pb-10">
-            <h2 class="text-2xl font-bold mb-4">行前備忘錄</h2>
+            <h2 class="text-2xl font-bold mb-4 text-white">行前備忘錄</h2>
             <div class="glass p-5 space-y-4">
                 <a href="https://www.vjw.digital.go.jp/main/#/vjwplo001" target="_blank" class="flex items-center justify-between border-b border-white/10 pb-3">
                     <span class="flex items-center"><i class="fa-solid fa-passport mr-3 text-orange-400"></i> Visit Japan Web</span>
-                    <i class="fa-solid fa-chevron-right text-xs text-white/50"></i>
+                    <i class="fa-solid fa-chevron-right text-xs"></i>
                 </a>
                 <div class="flex items-center justify-between border-b border-white/10 pb-3">
                     <span class="flex items-center"><i class="fa-solid fa-ticket mr-3 text-green-400"></i> JGF 門票預購 (¥1,000)</span>
-                    <a href="https://www.japangolffair.com/" target="_blank" class="text-blue-300 underline text-sm">官網</a>
+                    <a href="https://www.japangolffair.com/" target="_blank" class="text-blue-300 underline text-sm">官網連結</a>
                 </div>
                 <div>
-                    <p class="mb-2 text-sm font-bold opacity-80 italic">個人筆記：</p>
-                    <textarea id="personalNote" oninput="saveNotes()" class="w-full bg-black/30 border border-white/20 rounded-xl p-3 text-white focus:outline-none" rows="5" placeholder="輸入個人備忘項目..."></textarea>
+                    <p class="mb-2 text-sm font-bold opacity-80">自定義筆記：</p>
+                    <textarea id="personalNote" oninput="saveNotes()" class="w-full bg-black/30 border border-white/20 rounded-xl p-3 text-white focus:outline-none" rows="5" placeholder="在此記錄重要項目..."></textarea>
                 </div>
             </div>
         </div>
@@ -63,11 +63,11 @@
             <h2 class="text-2xl font-bold mb-4 text-center">商務助理</h2>
             <div class="glass p-5">
                 <h3 class="font-bold mb-3 flex items-center"><i class="fa-solid fa-money-bill-transfer mr-2"></i> 即時匯率 (JPY ➔ TWD)</h3>
-                <p id="rateStatus" class="text-[10px] text-green-400 mb-2 italic">正在獲取最新匯率...</p>
+                <p id="rateStatus" class="text-[10px] text-green-400 mb-2 italic">正在取得最新匯率...</p>
                 <div class="space-y-3">
-                    <input type="number" id="jpyInput" oninput="convertCurrency()" class="w-full bg-white/10 border border-white/20 rounded-lg p-2 text-xl" placeholder="日圓金額">
+                    <input type="number" id="jpyInput" oninput="convertCurrency()" class="w-full bg-white/10 border border-white/20 rounded-lg p-2 text-xl" placeholder="日圓">
                     <div class="text-center font-bold">⬇</div>
-                    <input type="number" id="twdOutput" readonly class="w-full bg-white/5 border border-white/20 rounded-lg p-2 text-xl text-green-300" placeholder="台幣金額">
+                    <input type="number" id="twdOutput" readonly class="w-full bg-white/5 border border-white/20 rounded-lg p-2 text-xl text-green-300" placeholder="台幣">
                 </div>
             </div>
         </div>
@@ -76,10 +76,10 @@
             <h2 class="text-2xl font-bold mb-4">採購明細</h2>
             <div class="glass p-5">
                 <div id="shoppingListContainer" class="space-y-3"></div>
-                <button onclick="addShoppingItem()" class="w-full mt-4 border-2 border-dashed border-white/30 py-3 rounded-xl hover:bg-white/10">+ 新增採購項目</button>
+                <button onclick="addShoppingItem()" class="w-full mt-4 border-2 border-dashed border-white/30 py-3 rounded-xl">+ 新增項目</button>
                 <div class="mt-6 pt-4 border-t border-white/20">
-                    <div class="flex justify-between items-center text-lg"><span>總計 (JPY)</span><span id="totalJPY" class="font-bold text-xl text-white">0</span></div>
-                    <div class="flex justify-between items-center text-green-300"><span>總計 (TWD)</span><span id="totalTWD" class="font-bold">0</span></div>
+                    <div class="flex justify-between items-center text-lg"><span>總計 (JPY)</span><span id="totalJPY">0</span></div>
+                    <div class="flex justify-between items-center text-green-300"><span>總計 (TWD)</span><span id="totalTWD">0</span></div>
                 </div>
             </div>
         </div>
@@ -93,7 +93,7 @@
     </nav>
 
     <script>
-        // --- Google Drive 圖片連結 (已填入搜尋到的真實 ID) ---
+        // Google Drive 圖片 ID 與 導航連結 設定
         const DRIVE_BASE = "https://drive.google.com/uc?export=view&id=";
         const IMAGES = {
             day1: DRIVE_BASE + "1a_gJz8kYNAz-2r6wQJJy_gS1W5tu8ML8",
@@ -104,6 +104,30 @@
             golf: DRIVE_BASE + "1UGYS5k8yEnK4ejpp3cWZF4tTY9DDB7xz"
         };
 
+        const SCHEDULE = [
+            { day: 1, date: "2026/03/05", items: [
+                { time: "14:00", title: "抵達與入境 (NRT)", location: "CX504 抵達成田機場", desc: "國泰航空 | 櫃檯 F" },
+                { time: "16:00", title: "飯店 Check-in", location: "日航豐洲酒店", desc: "東京都江東区豊洲 6-4-20", map: "https://www.google.com/maps/search/?api=1&query=Hotel+JAL+City+Tokyo+Toyosu", web: "https://www.tokyo-toyosu.hoteljalcity.com/" }
+            ]},
+            { day: 2, date: "2026/03/06", items: [
+                { time: "09:30", title: "商務拜訪", location: "TaylorMade Japan", desc: "青海辦公室", map: "https://www.google.com/maps/search/?api=1&query=TaylorMade+Japan+Aomi+Office" },
+                { time: "13:00", title: "參展 JGF", location: "橫濱國際平和會議場", desc: "PACIFICO Yokohama", map: "https://www.google.com/maps/search/?api=1&query=PACIFICO+Yokohama", web: "https://www.japangolffair.com/" },
+                { time: "18:30", title: "晚餐 (天婦羅)", location: "若竹 (Wakatake)", desc: "高輪格蘭王子大飯店 1F", map: "https://www.google.com/maps/search/?api=1&query=Tempura+Wakatake+Grand+Prince+Hotel+Takanawa", web: "https://www.princehotels.com/takanawa/zh-hant/restaurant/wakatake-tempura-restaurant/" }
+            ]},
+            { day: 3, date: "2026/03/07", items: [
+                { time: "10:30", title: "參訪", location: "皇居周邊參觀", map: "https://www.google.com/maps/search/?api=1&query=Imperial+Palace+Tokyo", guide: IMAGES.walk },
+                { time: "12:00", title: "Victoria Golf 考察", location: "御茶之水店", map: "https://www.google.com/maps/search/?api=1&query=Victoria+Golf+Ochanomizu", web: "https://store.victoriagolf.supersports.com/22281?utm_source=yext&utm_medium=local-listing&utm_campaign=yext-listing", guide: IMAGES.golf },
+                { time: "14:00", title: "BicCamera 考察", location: "有樂町店", map: "https://www.google.com/maps/search/?api=1&query=BicCamera+Yurakucho", web: "https://www.biccamera.com/bc/i/shop/shoplist/shop014.jsp?ref=gmb", guide: IMAGES.golf },
+                { time: "15:30", title: "Double Eagle 考察", location: "銀座店", map: "https://www.google.com/maps/search/?api=1&query=Double+Eagle+Ginza", web: "https://www.double-eagle-golf.com/", guide: IMAGES.golf },
+                { time: "17:30", title: "TaylorMade 考察", location: "銀座旗艦店", map: "https://www.google.com/maps/search/?api=1&query=TaylorMade+Ginza", web: "https://www.taylormadegolf.jp/shop_ginza.html", guide: IMAGES.golf },
+                { time: "18:30", title: "懷石料理「和田倉」", location: "東京皇宮酒店 6F", map: "https://www.google.com/maps/search/?api=1&query=Wadakura+Palace+Hotel+Tokyo", web: "https://en.palacehoteltokyo.com/restaurant/wadakura/" }
+            ]},
+            { day: 4, date: "2026/03/08", items: [
+                { time: "09:30", title: "飯店 Check-out", location: "準備回程" },
+                { time: "14:10", title: "啟程回國 (NRT)", location: "CX527 成田飛香港" }
+            ]}
+        ];
+
         let currentRate = 0.21;
 
         async function fetchExchangeRate() {
@@ -111,34 +135,11 @@
                 const res = await fetch('https://open.er-api.com/v6/latest/JPY');
                 const data = await res.json();
                 currentRate = data.rates.TWD;
-                document.getElementById('rateStatus').innerText = `已同步最新匯率: 1 JPY = ${currentRate.toFixed(4)} TWD`;
+                document.getElementById('rateStatus').innerText = `已同步即時匯率: 1 JPY = ${currentRate.toFixed(4)} TWD`;
             } catch (e) {
                 document.getElementById('rateStatus').innerText = "匯率同步失敗，使用預設 0.21";
             }
         }
-
-        const SCHEDULE = [
-            { day: 1, date: "2026/03/05", items: [
-                { time: "14:00", title: "抵達與入境 (NRT)", location: "CX504 抵達成田機場", desc: "國泰航空 | 報到櫃檯 F" },
-                { time: "16:00", title: "飯店 Check-in", location: "日航豐洲酒店", desc: "東京都江東区豊洲 6-4-20", web: "https://www.tokyo-toyosu.hoteljalcity.com/" }
-            ]},
-            { day: 2, date: "2026/03/06", items: [
-                { time: "09:30", title: "商務拜訪", location: "TaylorMade 青海辦公室" },
-                { time: "13:00", title: "參展 JGF", location: "橫濱國際平和會議場", web: "https://www.japangolffair.com/" },
-                { time: "18:30", title: "晚餐 (天婦羅)", location: "若竹 (Wakatake)", web: "https://www.princehotels.com/takanawa/zh-hant/restaurant/wakatake-tempura-restaurant/" }
-            ]},
-            { day: 3, date: "2026/03/07", items: [
-                { time: "10:30", title: "參訪", location: "皇居周邊參觀", guide: IMAGES.walk },
-                { time: "12:00", title: "Victoria Golf 考察", location: "御茶之水店", web: "https://store.victoriagolf.supersports.com/22281?utm_source=yext&utm_medium=local-listing&utm_campaign=yext-listing", guide: IMAGES.golf },
-                { time: "14:00", title: "BicCamera 考察", location: "有樂町店", web: "https://www.biccamera.com/bc/i/shop/shoplist/shop014.jsp?ref=gmb", guide: IMAGES.golf },
-                { time: "15:30", title: "Double Eagle 考察", location: "銀座店", web: "https://www.double-eagle-golf.com/", guide: IMAGES.golf },
-                { time: "18:30", title: "懷石料理「和田倉」", location: "東京皇宮酒店 6F", web: "https://en.palacehoteltokyo.com/restaurant/wadakura/" }
-            ]},
-            { day: 4, date: "2026/03/08", items: [
-                { time: "09:30", title: "飯店 Check-out", location: "準備回國" },
-                { time: "14:10", title: "啟程回國 (NRT)", location: "CX527 成田飛香港" }
-            ]}
-        ];
 
         function enterApp() {
             document.getElementById('splash').classList.add('opacity-0');
@@ -154,17 +155,18 @@
             document.getElementById('top-date').innerText = dayData.date;
             document.getElementById('appBody').style.backgroundImage = `linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('${IMAGES['day'+dayNum]}')`;
             
-            let html = `<div class="space-y-4">`;
+            let html = `<div class="space-y-4 animate-fadeIn">`;
             dayData.items.forEach(item => {
                 html += `
-                    <div class="glass p-4 flex gap-4">
+                    <div class="glass p-4 flex gap-4 items-start">
                         <div class="text-sm font-bold w-12 pt-1 text-white/70">${item.time || ''}</div>
                         <div class="flex-1">
                             <h3 class="font-bold text-lg">${item.title}</h3>
                             <p class="text-white/80 text-sm">${item.location}</p>
-                            <div class="mt-3 flex gap-2 flex-wrap text-xs">
-                                ${item.web ? `<a href="${item.web}" target="_blank" class="bg-blue-600/40 px-3 py-1 rounded-full">官網連結</a>` : ''}
-                                ${item.guide ? `<a href="${item.guide}" target="_blank" class="bg-orange-500/50 px-3 py-1 rounded-full"><i class="fa-solid fa-map-marked-alt mr-1"></i>地圖導覽圖</a>` : ''}
+                            <div class="mt-3 flex gap-2 flex-wrap text-[11px]">
+                                ${item.map ? `<a href="${item.map}" target="_blank" class="bg-blue-500/60 px-3 py-1 rounded-full"><i class="fa-solid fa-location-dot mr-1"></i>Google Maps</a>` : ''}
+                                ${item.web ? `<a href="${item.web}" target="_blank" class="bg-gray-500/50 px-3 py-1 rounded-full"><i class="fa-solid fa-link mr-1"></i>官網</a>` : ''}
+                                ${item.guide ? `<a href="${item.guide}" target="_blank" class="bg-orange-500/60 px-3 py-1 rounded-full"><i class="fa-solid fa-map mr-1"></i>地圖導覽圖</a>` : ''}
                             </div>
                         </div>
                     </div>`;
@@ -191,14 +193,13 @@
             document.getElementById('twdOutput').value = Math.round(jpy * currentRate);
         }
 
-        // --- 持久化資料處理 ---
         let items = [];
         function saveNotes() { localStorage.setItem('jgf_notes', document.getElementById('personalNote').value); }
         function addShoppingItem() { items.push({ name: '', price: 0 }); renderShoppingList(); }
         function renderShoppingList() {
             document.getElementById('shoppingListContainer').innerHTML = items.map((item, i) => `
                 <div class="flex gap-2 bg-white/5 p-2 rounded-lg">
-                    <input type="text" value="${item.name}" oninput="items[${i}].name=this.value;saveShopping()" class="bg-transparent flex-1 outline-none text-sm" placeholder="商品">
+                    <input type="text" value="${item.name}" oninput="items[${i}].name=this.value;saveShopping()" class="bg-transparent flex-1 outline-none text-sm" placeholder="項目名稱">
                     <input type="number" value="${item.price}" oninput="items[${i}].price=this.value;saveShopping()" class="bg-transparent w-20 text-right outline-none text-sm" placeholder="JPY">
                 </div>
             `).join('');
